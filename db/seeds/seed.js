@@ -5,6 +5,7 @@ const {
   userData,
 } = require("../data/index.js");
 
+const { formatTime } = require("../utils/data-manipulation");
 // const { formatTime } = require("../utils");
 
 exports.seed = function (knex) {
@@ -19,10 +20,13 @@ exports.seed = function (knex) {
     .then(() => {
       return knex("users").insert(userData).returning("*");
     })
-    .then((timeStamp) => {
-      console.log(articleData[0].created_at, "*** article data***");
-      const readableTime = formatTime;
-
-      return knex("articles").insert(articleData).returning("*");
+    .then(() => {
+      const formattedArticles = formatTime(articleData);
+      return knex("articles").insert(formattedArticles).returning("*");
+    })
+    .then(() => {
+      //change the created_by key to author which = username - formatItems
+      //change the belongs_to article_id
+      //reformat created_at - formatTime
     });
 };

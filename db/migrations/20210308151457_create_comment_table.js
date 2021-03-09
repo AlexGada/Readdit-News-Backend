@@ -8,7 +8,7 @@ exports.up = function (knex) {
       .references("articles.article_id")
       .notNullable();
     commentTable.integer("votes").defaultsTo(0).notNullable();
-    commentTable.string("body").notNullable();
+    commentTable.text("body").notNullable();
   });
 };
 

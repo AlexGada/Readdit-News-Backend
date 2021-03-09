@@ -4,9 +4,10 @@
   "description": "bc-nc-news",
   "main": "index.js",
   "scripts": {
-    "setup-dbs": "psql -f ./db/setup.sql > output.txt",
+    "setup-dbs": "psql -f ./db/setup.sql",
     "seed": "knex seed:run",
     "test": "jest",
+    "print": "psql -f output.sql > output.txt",
     "migrate-make": "knex migrate:make",
     "migrate-latest": "knex migrate:latest",
     "migrate-rollback": "knex migrate:rollback"
@@ -26,6 +27,7 @@
     "express": "^4.17.1",
     "jest": "^26.6.3",
     "knex": "^0.95.1",
-    "pg": "^8.5.1"
+    "pg": "^8.5.1",
+    "supertest": "^6.1.3"
   }
 }

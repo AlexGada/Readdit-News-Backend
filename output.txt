@@ -1,6 +1,4 @@
-DROP DATABASE
-CREATE DATABASE
-You are now connected to database "nc_news" as user "togden".
+You are now connected to database "nc_news" as user "alexgada1".
    slug   |               description               
 ----------+-----------------------------------------
  coding   | Code is love, code is life
