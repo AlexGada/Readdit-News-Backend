@@ -1,8 +1,10 @@
 // // extract any functions you are using to manipulate your data, into this file
-exports.formatTime = (unixTime) => {
-  const milliseconds = unixTime * 1000;
-  const dateObj = new Date(milliseconds);
-  return dateObj;
+exports.formatTime = (object, unixTime) => {
+  const correctTime = {};
+  object.forEach((item) => {
+    correctTime[unixTime] = item[unixTime] * 1000;
+  });
+  return correctTime;
 };
 
 //take an article array of objects
