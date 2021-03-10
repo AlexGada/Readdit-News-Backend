@@ -6,7 +6,9 @@
   "scripts": {
     "setup-dbs": "psql -f ./db/setup.sql",
     "seed": "knex seed:run",
-    "test": "jest",
+    "seed-test": "NODE_ENV=test knex seed:run",
+    "test-utils": "jest __tests__/utils.test.js",
+    "test-app": "npm run seed-test && jest __tests__/app.test.js",
     "print": "psql -f output.sql > output.txt",
     "migrate-make": "knex migrate:make",
     "migrate-latest": "knex migrate:latest",

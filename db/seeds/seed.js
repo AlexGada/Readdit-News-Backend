@@ -5,7 +5,11 @@ const {
   userData,
 } = require("../data/index.js");
 
-const { formatTime } = require("../utils/data-manipulation");
+const {
+  formatTime,
+  createRefObject,
+  formatData,
+} = require("../utils/data-manipulation");
 // const { formatTime } = require("../utils");
 
 exports.seed = function (knex) {
@@ -24,9 +28,24 @@ exports.seed = function (knex) {
       const formattedArticles = formatTime(articleData);
       return knex("articles").insert(formattedArticles).returning("*");
     })
-    .then(() => {
-      //change the created_by key to author which = username - formatItems
-      //change the belongs_to article_id
-      //reformat created_at - formatTime
+    .then((articles) => {
+      const articlesRefObject = createRefObject(
+        articles,
+        "title",
+        "article_id"
+      );
+
+      const commentTime = formatTime(commentData);
+
+      const formattedComments = formatData(
+        commentTime,
+        "created_by",
+        "author",
+        "belongs_to",
+        "article_id",
+        articlesRefObject
+      );
+
+      return knex("comments").insert(formattedComments);
     });
 };

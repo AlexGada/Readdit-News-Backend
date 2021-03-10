@@ -11,6 +11,40 @@ exports.formatTime = (articles) => {
   return correctTime;
 };
 
+//input, title, article_id
+
+exports.createRefObject = (arr, refKey, refValue) => {
+  const refObject = {};
+
+  arr.forEach((obj) => {
+    const refKeys = obj[refKey];
+    const refVal = obj[refValue];
+
+    refObject[refKeys] = refVal;
+  });
+  return refObject;
+};
+
+// input, created_by, author, belongs_to, article_id, refObj
+
+exports.formatData = (
+  arr,
+  keyToChangeOne,
+  newKeyOne,
+  keyToChangeTwo,
+  newKeyTwo,
+  refObj
+) => {
+  const reformattedArr = arr.map(({ ...obj }) => {
+    obj[newKeyOne] = obj[keyToChangeOne];
+    obj[newKeyTwo] = refObj[obj[keyToChangeTwo]];
+    delete obj[keyToChangeOne];
+    delete obj[keyToChangeTwo];
+    return obj;
+  });
+  return reformattedArr;
+};
+
 exports.formatItems = (items, refObj, keyToChange, newKey) => {
   const formattedItems = items.map((item) => {
     const formattedItem = { ...item };
@@ -22,15 +56,15 @@ exports.formatItems = (items, refObj, keyToChange, newKey) => {
   return formattedItems;
 };
 
-exports.createRefObj = (items, key, value) => {
-  const refObj = {};
-  if (!items.length) return refObj;
+// exports.createRefObj = (items, key, value) => {
+//   const refObj = {};
+//   if (!items.length) return refObj;
 
-  items.forEach((item) => {
-    const refKey = item[key];
-    const refValue = item[value];
+//   items.forEach((item) => {
+//     const refKey = item[key];
+//     const refValue = item[value];
 
-    refObj[refKey] = refValue;
-  });
-  return refObj;
-};
+//     refObj[refKey] = refValue;
+//   });
+//   return refObj;
+// };
