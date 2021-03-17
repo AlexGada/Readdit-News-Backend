@@ -10,7 +10,6 @@ const {
   createRefObject,
   formatData,
 } = require("../utils/data-manipulation");
-// const { formatTime } = require("../utils");
 
 exports.seed = function (knex) {
   return knex.migrate

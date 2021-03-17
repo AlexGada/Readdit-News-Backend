@@ -5,33 +5,34 @@ const {
   removeArticleByID,
   editArticleByID,
   addArticleComments,
+  fetchTotalCount,
 } = require("../models/articlesModels");
 
 exports.getArticles = (req, res, next) => {
-  console.log("in the getArticles controller");
-
-  fetchArticles(req.query)
+  const { sort_by, order, author, topic, limit, p } = req.query;
+  fetchArticles(sort_by, order, author, topic, limit, p)
     .then((articles) => {
-      res.status(200).send({ articles });
+      fetchTotalCount(author, topic).then((total_count) => {
+        res.status(200).send({ articles, total_count });
+      });
     })
     .catch(next);
 };
 
 exports.getArticleByID = (req, res, next) => {
-  console.log("in the getArticlesByID controller");
+  ("in the getArticlesByID controller");
   const id = req.params.article_id;
   fetchArticleByID(id)
     .then((article) => {
-      res.status(200).send({ article: article });
+      res.status(200).send({ article });
     })
     .catch(next);
 };
 
 exports.getArticleComments = (req, res, next) => {
-  console.log("in the comment controller");
-  const id = req.params.article_id;
-  const queries = req.query;
-  fetchArticleComments(id, queries)
+  const { sort_by, order, limit, p } = req.query;
+  const { article_id } = req.params;
+  fetchArticleComments(article_id, sort_by, order, limit, p)
     .then((comments) => {
       res.status(200).send({ comments });
     })
@@ -39,7 +40,6 @@ exports.getArticleComments = (req, res, next) => {
 };
 
 exports.deleteArticleByID = (req, res, next) => {
-  console.log("in the delete articles controller");
   const id = req.params.article_id;
   removeArticleByID(id)
     .then(() => {
@@ -51,7 +51,6 @@ exports.deleteArticleByID = (req, res, next) => {
 exports.patchByArticleID = (req, res, next) => {
   const id = req.params.article_id;
   const incrementor = req.body.inc_votes;
-
   editArticleByID(id, incrementor)
     .then((article) => {
       return res.status(200).send({ article });
@@ -60,10 +59,11 @@ exports.patchByArticleID = (req, res, next) => {
 };
 
 exports.postArticleComments = (req, res, next) => {
-  console.log("in the post article controller");
-  const newComment = req.body;
-  const id = req.params.article_id;
-  addArticleComments(newComment, id).then((comments) => {
-    res.status(201).send({ comments });
-  });
+  const { article_id } = req.params;
+  const { username, ...body } = req.body;
+  addArticleComments(article_id, username, body)
+    .then((comments) => {
+      res.status(201).send({ comments });
+    })
+    .catch(next);
 };
