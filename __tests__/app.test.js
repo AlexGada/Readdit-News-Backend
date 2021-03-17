@@ -8,6 +8,31 @@ beforeEach(() => dbConnection.seed.run());
 afterAll(() => dbConnection.destroy());
 
 describe("/api", () => {
+  describe("GET", () => {
+    it.only("status 200: successfully responds with a JSON object of the endpoints", () => {
+      return request(app)
+        .get("/api")
+        .expect(200)
+        .then(({ body: { endpoints } }) => {
+          console.log(endpoints);
+          expect(typeof endpoints).toBe("object");
+        });
+    });
+    describe("Errors", () => {
+      it("status 405: Invalid Methods", () => {
+        const methods = ["post", "patch", "delete", "put"];
+        const promises = methods.map((method) => {
+          return request(app)
+            [method]("/api")
+            .expect(405)
+            .then(({ body }) => {
+              expect(body.msg).toBe("Invalid method");
+            });
+        });
+        return Promise.all(promises);
+      });
+    });
+  });
   describe("/topics", () => {
     describe("GET", () => {
       it("status 200: successfully fetches topics", () => {
@@ -943,7 +968,7 @@ describe("/api", () => {
       const methods = ["get", "post", "patch", "put", "delete"];
       const methodPromises = methods.map((method) => {
         return request(app)
-          [method]("/Invalid_route")
+          [method]("/this_isnt_a_route")
           .expect(404)
           .then(({ body }) => {
             expect(body.msg).toBe("Route not found");

@@ -4,9 +4,9 @@ const usersRouter = require("./usersRouter");
 const articlesRouter = require("./articlesRouter");
 const commentsRouter = require("./commentsRouter");
 const { handleInvalidMethods } = require("../errors");
+const { getEndpoints } = require("../controllers/apiController");
 
-apiRouter.route("/").all(handleInvalidMethods); //create the api controller and then the get endpoints function
-// get(getEndpoints);
+apiRouter.route("/").get(getEndpoints).all(handleInvalidMethods);
 
 apiRouter.use("/topics", topicsRouter);
 apiRouter.use("/users", usersRouter);
