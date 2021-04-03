@@ -5,6 +5,92 @@
 - This is an API built for the reddit-inspired app Readdit news and is hosted [here](https://https://readdit-news.herokuapp.com/api) on Heroku.
 - The API uses an express server, the data is stored on a PSQL database and knex is used to access the data.
 
+## How to use
+
+_CLONING_
+
+- In the command line in the directory you want the repository stored, type `git clone https://github.com/AlexGada/be-nc-news` to clone the repository to your operating system.
+
+### Dependencies
+
+_Node.js_
+
+- Ensure you have the latest version of Node (v15.3.0) installed onto your operating system. Click [here](https://nodejs.org/en/download/) to install Node.
+
+_PSQL_
+
+- Ensure you have the latest version of PSQL (12.6) downloaded to your operating system. Click [here](https://www.postgresql.org/download/) to install PSQL.
+
+_Express_
+
+- In the repository terminal install express by running `npm i express`.
+
+_Knex_
+
+- Postgres knex is required, in the repository terminal install Knex by running `npm i knex pg`
+
+_Jest_
+
+- Dev dependencies of Jest required for testing, in the repository terminal install Jest by running `npm i -D jest`
+
+_Jest Sorted_
+
+- Dev dependencies of Jest sorted required for testing, in the repository terminal install Jest-sorted by running `npm i -D jest-sorted`
+
+_Supertest_
+
+- Dev dependencies of supertest required for testing, in the repository terminal install supertest by running `npm i -D supertest`
+
+_Seeding_
+
+- Run terminal command: npm run setup-dbs to initialise database
+- Run terminal command: npm run migrate-rollback to clear tables
+- Run terminal command: npm run migrate-latest to populate tables
+
+_Testing_
+
+- app functionality (endpoints and error handling) can be tested using Jest with the tests written in the app.tests.js file.
+- Utils used for seeding can be tested using Jest with the tests written in the utils.test.js file
+
+_knexfile.js_
+
+- Use the formatting below to create a root level knexfile (add the file to the **.gitignore** to ensure personal information remains private)
+
+````json const { DB_URL } = process.env;
+const ENV = process.env.NODE_ENV || "development";
+const baseConfig = {
+client: "pg",
+migrations: {
+directory: "./db/migrations",
+},
+seeds: {
+directory: "./db/seeds",
+},
+};
+const customConfigs = {
+development: {
+connection: { database: "nc_news",
+username: "YOUR PSQL USERNAME", // Mac users do not require this
+password: "YOUR PSQL PASSWORD" }, // Mac users do not require this
+},
+test: {
+connection: {
+database: "nc_news_test",
+username: "YOUR PSQL USERNAME", // Mac users do not require this
+password: "YOUR PSQL PASSWORD", // Mac users do not require this
+},
+},
+production: {
+connection: {
+connectionString: DB_URL,
+ssl: {
+rejectUnauthorized: false,
+},
+},
+},
+};
+module.exports = { ...baseConfig, ...customConfigs[ENV] }; ```
+
 ## Data
 
 The data is split into 4 tables in the PSQL database:
@@ -108,3 +194,5 @@ _PATCH_
 _DELETE_
 
 - Deletes the comment matching comment_id
+
+````
