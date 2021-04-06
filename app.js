@@ -7,8 +7,11 @@ const {
   handleInvalidMethods,
 } = require("./errors/index.js");
 const apiRouter = require("./routers/apiRouter.js");
+const cors = require("cors");
+
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 app.use("/api", apiRouter);
