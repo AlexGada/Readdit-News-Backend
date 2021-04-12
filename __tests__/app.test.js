@@ -9,7 +9,7 @@ afterAll(() => dbConnection.destroy());
 
 describe("/api", () => {
   describe("GET", () => {
-    it.only("status 200: successfully responds with a JSON object of the endpoints", () => {
+    it("status 200: successfully responds with a JSON object of the endpoints", () => {
       return request(app)
         .get("/api")
         .expect(200)
@@ -811,7 +811,7 @@ describe("/api", () => {
         });
       });
       describe("POST", () => {
-        it("status 201: successfully posts a comment on the correct article with all the correct keys", () => {
+        it.only("status 201: successfully posts a comment on the correct article with all the correct keys", () => {
           return request(app)
             .post("/api/articles/3/comments")
             .send({
@@ -819,8 +819,8 @@ describe("/api", () => {
               body: "wow Alex is just the best",
             })
             .expect(201)
-            .then(({ body: { comments } }) => {
-              expect(Object.keys(comments)).toEqual(
+            .then(({ body: { comment } }) => {
+              expect(Object.keys(comment)).toEqual(
                 expect.arrayContaining([
                   "comment_id",
                   "author",

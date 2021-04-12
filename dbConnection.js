@@ -12,7 +12,9 @@ const dbConfig =
           },
         },
       }
-    : require("../knexfile");
+    : require("./knexfile");
+
+//console.log db config but connection should have the test key
 
 module.exports = knex(dbConfig);
 

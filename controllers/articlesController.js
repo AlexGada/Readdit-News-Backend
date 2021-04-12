@@ -60,10 +60,10 @@ exports.patchByArticleID = (req, res, next) => {
 
 exports.postArticleComments = (req, res, next) => {
   const { article_id } = req.params;
-  const { username, ...body } = req.body;
+  const { username, body } = req.body;
   addArticleComments(article_id, username, body)
-    .then((comments) => {
-      res.status(201).send({ comments });
+    .then((comment) => {
+      res.status(201).send({ comment });
     })
     .catch(next);
 };

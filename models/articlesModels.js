@@ -157,7 +157,7 @@ exports.editArticleByID = (id, incrementor) => {
 };
 
 exports.addArticleComments = (article_id, username, body) => {
-  if (typeof body.body !== "string") {
+  if (typeof body !== "string") {
     return Promise.reject({
       status: 400,
       msg: `Bad request - ${body} is not in the correct format`,
@@ -181,8 +181,8 @@ exports.addArticleComments = (article_id, username, body) => {
           })
           .into("comments")
           .returning("*")
-          .then((comments) => {
-            return comments[0];
+          .then((comment) => {
+            return comment[0];
           });
       } else {
         return Promise.reject({
