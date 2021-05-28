@@ -56,7 +56,7 @@ _knexfile.js_
 
 - Use the formatting below to create a root level knexfile (add the file to the **.gitignore** to ensure personal information remains private)
 
-````json const { DB_URL } = process.env;
+```json const { DB_URL } = process.env;
 const ENV = process.env.NODE_ENV || "development";
 const baseConfig = {
 client: "pg",
@@ -89,7 +89,8 @@ rejectUnauthorized: false,
 },
 },
 };
-module.exports = { ...baseConfig, ...customConfigs[ENV] }; ```
+module.exports = { ...baseConfig, ...customConfigs[ENV] };
+```
 
 ## Data
 
@@ -195,4 +196,6 @@ _DELETE_
 
 - Deletes the comment matching comment_id
 
-````
+```
+
+```
