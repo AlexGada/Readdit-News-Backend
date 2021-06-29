@@ -14,7 +14,6 @@ describe("/api", () => {
         .get("/api")
         .expect(200)
         .then(({ body: { endpoints } }) => {
-          console.log(endpoints);
           expect(typeof endpoints).toBe("object");
         });
     });
@@ -811,7 +810,7 @@ describe("/api", () => {
         });
       });
       describe("POST", () => {
-        it.only("status 201: successfully posts a comment on the correct article with all the correct keys", () => {
+        it("status 201: successfully posts a comment on the correct article with all the correct keys", () => {
           return request(app)
             .post("/api/articles/3/comments")
             .send({
@@ -866,8 +865,7 @@ describe("/api", () => {
               article_id: 1,
               votes: 112,
               created_at: "2015-11-23T12:36:03.389Z",
-              body:
-                "Replacing the quiet elegance of the dark suit and tie with the casual indifference of these muted earth tones is a form of fashion suicide, but, uh, call me crazy — onyou it works.",
+              body: "Replacing the quiet elegance of the dark suit and tie with the casual indifference of these muted earth tones is a form of fashion suicide, but, uh, call me crazy — onyou it works.",
             });
           });
       });
@@ -883,8 +881,7 @@ describe("/api", () => {
               article_id: 1,
               votes: 88,
               created_at: "2015-11-23T12:36:03.389Z",
-              body:
-                "Replacing the quiet elegance of the dark suit and tie with the casual indifference of these muted earth tones is a form of fashion suicide, but, uh, call me crazy — onyou it works.",
+              body: "Replacing the quiet elegance of the dark suit and tie with the casual indifference of these muted earth tones is a form of fashion suicide, but, uh, call me crazy — onyou it works.",
             });
           });
       });
